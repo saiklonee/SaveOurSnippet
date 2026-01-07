@@ -19,4 +19,3 @@ app.use("/api/snippets", requireAuth(), snippetRoutes);
 app.use("/api/collection", requireAuth(), collectionRoutes);
 
 module.exports = app;
-x``;
