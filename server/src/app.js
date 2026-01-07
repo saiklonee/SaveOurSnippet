@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const userRoutes = require("./routes/user.routes");
+const snippetRoutes = require("./routes/snippet.routes");
 const { requireAuth } = require("@clerk/express");
 
 const app = express();
@@ -13,5 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", requireAuth(), userRoutes);
+app.use("/api/snippets", requireAuth(), snippetRoutes);
 
 module.exports = app;
+x``;
