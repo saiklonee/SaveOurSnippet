@@ -1,4 +1,5 @@
-const Collection = require("");
+const Collection = require("../models/collection.model");
+const Snippet = require("../models/snippet.model");
 
 const createCollection = async (req, res) => {
   try {
@@ -34,6 +35,34 @@ const getCollections = async (req, res) => {
   }
 };
 
-const deleteCollection = async (req, res) => {};
+/**
+ * DELETE COLLECTION
+ * IMPORTANT: snippets are NOT deleted
+ */
+const deleteCollection = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+    const collectionId = req.params.id;
 
-module.exports = { createCollection, deleteCollection };
+    const collection = await Collection.findOneAndDelete({
+      _id: collectionId,
+      clerkUserId: userId,
+    });
+
+    if (!collection) {
+      return res.status(404).json({ message: "Collection not found" });
+    }
+
+    // Remove collection reference from snippets
+    await Snippet.updateMany(
+      { clerkUserId: userId, collectionId },
+      { collectionId: null }
+    );
+
+    res.json({ message: "Collection deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createCollection, getCollections, deleteCollection };
