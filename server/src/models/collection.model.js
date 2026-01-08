@@ -12,9 +12,9 @@ const collectionSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    isPinned: {
-      type: Boolean,
-      default: false,
+    color: {
+      type: String,
+      default: "#6366f1",
     },
   },
   { timestamps: true }
