@@ -36,6 +36,28 @@ const getCollections = async (req, res) => {
 };
 
 /**
+ * GET ONE COLLECTION
+ */
+const getCollectionById = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+
+    const collection = await Collection.findOne({
+      _id: req.params.id,
+      clerkUserId: userId,
+    });
+
+    if (!collection) {
+      return res.status(404).json({ message: "Collection not found" });
+    }
+
+    res.json(collection);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+/**
  * UPDATE COLLECTION
  */
 const updateCollection = async (req, res) => {
@@ -88,4 +110,10 @@ const deleteCollection = async (req, res) => {
   }
 };
 
-module.exports = { createCollection, getCollections, deleteCollection };
+module.exports = {
+  createCollection,
+  getCollections,
+  getCollectionById,
+  updateCollection,
+  deleteCollection,
+};
