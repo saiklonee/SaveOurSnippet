@@ -17,6 +17,23 @@ const createCollection = async (req, res) => {
   }
 };
 
+/**
+ * GET ALL COLLECTIONS
+ */
+const getCollections = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+
+    const collections = await Collection.find({
+      clerkUserId: userId,
+    }).sort({ createdAt: -1 });
+
+    res.json(collections);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const deleteCollection = async (req, res) => {};
 
 module.exports = { createCollection, deleteCollection };
