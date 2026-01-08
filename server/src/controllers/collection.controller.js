@@ -36,6 +36,29 @@ const getCollections = async (req, res) => {
 };
 
 /**
+ * UPDATE COLLECTION
+ */
+const updateCollection = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+
+    const collection = await Collection.findOneAndUpdate(
+      { _id: req.params.id, clerkUserId: userId },
+      req.body,
+      { new: true }
+    );
+
+    if (!collection) {
+      return res.status(404).json({ message: "Collection not found" });
+    }
+
+    res.json(collection);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+/**
  * DELETE COLLECTION
  * IMPORTANT: snippets are NOT deleted
  */
