@@ -27,6 +27,7 @@ The app supports **authentication with Clerk**, **collections**, **pinning snipp
 - React Native (planned)
 - Clerk (Authentication)
 - Axios
+- tailwind CSS
 
 ### Backend
 
