@@ -4,7 +4,7 @@ const Snippet = require("../models/snippet.model");
 
 const createSnippet = async (req, res) => {
   try {
-    const userId = req.auth();
+    const { userId } = req.auth();
     const { title, description, code, language, tags, collectionId } = req.body;
 
     const snippet = await Snippet.create({
