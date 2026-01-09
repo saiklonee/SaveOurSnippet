@@ -35,3 +35,4 @@ The app supports **authentication with Clerk**, **collections**, **pinning snipp
 - Express.js
 - MongoDB + Mongoose
 - Clerk SDK
+- nodemon (dev)
